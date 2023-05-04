@@ -32,7 +32,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: GradientContainer(),
+      body: GradientContainer(
+        color1: Color.fromARGB(255, 26, 2, 80),
+        color2: Color.fromARGB(255, 45, 7, 98),
+      ),
     );
   }
 }
