@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:udemy_lessons/start_screen.dart';
+import 'package:udemy_lessons/quiz.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const StartScreen(),
+      home: const Quiz(),
     );
   }
 }

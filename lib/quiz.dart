@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_lessons/custom_decorated_box.dart';
+import 'package:udemy_lessons/questions_scrren.dart';
+import 'package:udemy_lessons/start_screen.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -8,8 +11,22 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  Widget activeScreen = const StartScreen();
+
+  void switchScreen() {
+    setState(() {
+      activeScreen = const QuestionsScreen();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Material(
+      child: Scaffold(
+        body: CustomDecoratedBox(
+          child: activeScreen,
+        ),
+      ),
+    );
   }
 }
