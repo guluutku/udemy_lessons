@@ -13,12 +13,15 @@ class StartScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Image.asset('assets/images/quiz-logo.png'),
+              Opacity(
+                opacity: 0.6,
+                child: Image.asset(
+                  'assets/images/quiz-logo.png',
+                  width: 300,
+                ),
               ),
               const SizedBox(
-                height: 15,
+                height: 50,
               ),
               const Text(
                 'Learn Flutter the fun way!',
