@@ -26,7 +26,10 @@ class _QuizState extends State<Quiz> {
         body: CustomDecoratedBox(
           child: activeScreen == 'start-screen'
               ? StartScreen(startQuiz: switchScreen)
-              : const QuestionsScreen(),
+              : const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: QuestionsScreen(),
+              ),
         ),
       ),
     );
