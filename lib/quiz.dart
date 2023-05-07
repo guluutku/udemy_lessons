@@ -13,7 +13,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  final List<String> selectedAnswer = [];
+  final List<String> selectedAnswersList = [];
   Widget? activeScreen;
 
   void switchScreen() {
@@ -25,11 +25,14 @@ class _QuizState extends State<Quiz> {
   }
 
   void chosenAnswer(String answer) {
-    selectedAnswer.add(answer);
+    selectedAnswersList.add(answer);
 
-    if (selectedAnswer.length == questions.length) {
+    if (selectedAnswersList.length == questions.length) {
       setState(() {
-        activeScreen = const ResultScreen();
+        activeScreen = ResultScreen(
+          selectedAnswers: selectedAnswersList,
+        );
+        selectedAnswersList.clear();
       });
     }
   }
@@ -44,9 +47,7 @@ class _QuizState extends State<Quiz> {
   Widget build(BuildContext context) {
     return Material(
       child: Scaffold(
-        body: CustomDecoratedBox(
-          child: activeScreen!
-        ),
+        body: CustomDecoratedBox(child: activeScreen!),
       ),
     );
   }
