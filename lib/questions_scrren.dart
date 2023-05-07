@@ -4,7 +4,12 @@ import 'package:udemy_lessons/answer_button.dart';
 import 'package:udemy_lessons/data/questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({super.key});
+  const QuestionsScreen({
+    super.key,
+    required this.chosenAnswer,
+  });
+
+  final void Function(String answer) chosenAnswer;
 
   @override
   State<QuestionsScreen> createState() => _QuestionsScreenState();
@@ -13,7 +18,8 @@ class QuestionsScreen extends StatefulWidget {
 class _QuestionsScreenState extends State<QuestionsScreen> {
   var currentQuestionIndex = 0;
 
-  void answerQuestion() {
+  void answerQuestion(String selectedAnswer) {
+    widget.chosenAnswer(selectedAnswer);
     setState(() {
       currentQuestionIndex++;
     });
@@ -42,7 +48,7 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
           ...currentQuestion.getShuffledANswers().map((listItem) {
             return AnswerButton(
               onPressed: () {
-                answerQuestion();
+                answerQuestion(listItem);
               },
               answerText: listItem,
             );
