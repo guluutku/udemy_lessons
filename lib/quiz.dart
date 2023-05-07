@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/custom_decorated_box.dart';
-import 'package:udemy_lessons/questions_scrren.dart';
+import 'package:udemy_lessons/data/questions.dart';
+import 'package:udemy_lessons/result_screen.dart';
+import 'package:udemy_lessons/questions_screen.dart';
 import 'package:udemy_lessons/start_screen.dart';
 
 class Quiz extends StatefulWidget {
@@ -12,16 +14,30 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   final List<String> selectedAnswer = [];
-  String activeScreen = 'start-screen';
+  Widget? activeScreen;
 
   void switchScreen() {
     setState(() {
-      activeScreen = 'questions-screen';
+      activeScreen = QuestionsScreen(
+        chosenAnswer: chosenAnswer,
+      );
     });
   }
 
   void chosenAnswer(String answer) {
     selectedAnswer.add(answer);
+
+    if (selectedAnswer.length == questions.length) {
+      setState(() {
+        activeScreen = const ResultScreen();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    activeScreen = StartScreen(startQuiz: switchScreen);
   }
 
   @override
@@ -29,12 +45,7 @@ class _QuizState extends State<Quiz> {
     return Material(
       child: Scaffold(
         body: CustomDecoratedBox(
-          child: activeScreen == 'start-screen'
-              ? StartScreen(startQuiz: switchScreen)
-              : Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: QuestionsScreen(chosenAnswer: chosenAnswer,),
-                ),
+          child: activeScreen!
         ),
       ),
     );
