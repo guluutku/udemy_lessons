@@ -77,7 +77,7 @@ class QuestionsSummary extends StatelessWidget {
   }
 
   TextStyle customTextStyle() {
-    return TextStyle(
+    return const TextStyle(
       color: Colors.white,
     );
   }

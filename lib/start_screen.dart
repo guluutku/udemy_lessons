@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:udemy_lessons/custom_decorated_box.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({

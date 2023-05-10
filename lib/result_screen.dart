@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/data/questions.dart';
 import 'package:udemy_lessons/questions_summary.dart';
+import 'package:udemy_lessons/quiz.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key, required this.chosenAnswers});
@@ -49,7 +49,14 @@ class ResultScreen extends StatelessWidget {
             ),
             QuestionsSummary(summaryData: getSummaryData()),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const Quiz(),
+                  ),
+                );
+              },
               child: const Text('Restart Quiz'),
             )
           ],
