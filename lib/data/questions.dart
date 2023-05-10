@@ -1,6 +1,6 @@
-import 'package:udemy_lessons/models/quiz_question.dart';
+import 'package:adv_basics/models/quiz_question.dart';
 
-List<QuizQuestion> questions = [
+const questions = [
   QuizQuestion(
     'What are the main building blocks of Flutter UIs?',
     [
