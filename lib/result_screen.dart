@@ -17,6 +17,7 @@ class ResultScreen extends StatelessWidget {
         'question_text': questions[i].questionText,
         'correct_answer': questions[i].answers[0],
         'chosen_answer': chosenAnswers[i],
+        'is_correct': chosenAnswers[i] == questions[i].answers[0],
       });
     }
     return summary;
@@ -29,6 +30,7 @@ class ResultScreen extends StatelessWidget {
     final numCorrectQuestions = summaryData.where((data) {
       return data['chosen_answer'] == data['correct_answer'];
     }).length;
+
     return SizedBox(
       width: double.infinity,
       child: Padding(
