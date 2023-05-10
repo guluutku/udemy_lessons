@@ -7,24 +7,49 @@ class QuestionsSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: summaryData.map((data) {
-        return Row(
-          children: [
-            Text('${(data['question_index'] as int) + 1}'),
-            Column(
+    return SizedBox(
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          children: summaryData.map((data) {
+            return Row(
               children: [
-                Text('${data['question']}'),
-                const SizedBox(
-                  height: 5,
+                Text(
+                  '${(data['question_index'] as int) + 1}',
+                  style: customTextStyle(),
                 ),
-                Text('${data['correct_answer']}'),
-                Text('${data['chosen_answer']}'),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        '${data['question_text']}',
+                        style: customTextStyle(),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${data['correct_answer']}',
+                        style: customTextStyle(),
+                      ),
+                      Text(
+                        '${data['chosen_answer']}',
+                        style: customTextStyle(),
+                      ),
+                    ],
+                  ),
+                ),
               ],
-            ),
-          ],
-        );
-      }).toList(),
+            );
+          }).toList(),
+        ),
+      ),
+    );
+  }
+
+  TextStyle customTextStyle() {
+    return TextStyle(
+      color: Colors.white,
     );
   }
 }
