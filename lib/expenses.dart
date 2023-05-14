@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_lessons/expeneses_list.dart';
 import 'package:udemy_lessons/models/expense.dart';
 
 class Expenses extends StatefulWidget {
@@ -29,9 +30,9 @@ class _ExpensesState extends State<Expenses> {
     return Scaffold(
       body: Center(
         child: Column(
-          children: const [
-            Text('The chart'),
-            Text('Expenses list...'),
+          children: [
+            const Text('The chart'),
+            Expanded(child: ExpensesList(expense: _registeredExpenses)),
           ],
         ),
       ),
