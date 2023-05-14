@@ -13,13 +13,13 @@ class Expense {
   Expense({
     required this.title,
     required this.amount,
-    required this.purchaseDate,
+    required this.purchasedDate,
     required this.category,
   }) : id = uuid.v4();
 
   final String id;
   final String title;
   final double amount;
-  final DateTime purchaseDate;
+  final DateTime purchasedDate;
   final Category category;
 }
