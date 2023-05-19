@@ -29,11 +29,11 @@ class _ExpensesState extends State<Expenses> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expenses'),
+        title: const Text('Expenses'),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
