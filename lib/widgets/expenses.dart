@@ -25,15 +25,22 @@ class _ExpensesState extends State<Expenses> {
     ),
   ];
 
+  void _addExpenseOverlay() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => const NewExpense(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expenses'),
+        title: const Text('Expenses'),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add),
+            onPressed: _addExpenseOverlay,
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
@@ -44,6 +51,71 @@ class _ExpensesState extends State<Expenses> {
             Expanded(child: ExpensesList(expense: _registeredExpenses)),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class NewExpense extends StatefulWidget {
+  const NewExpense({
+    super.key,
+  });
+
+  @override
+  State<NewExpense> createState() => _NewExpenseState();
+}
+
+class _NewExpenseState extends State<NewExpense> {
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleController;
+    _amountController;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          TextField(
+            controller: _titleController,
+            maxLength: 50,
+            decoration: const InputDecoration(
+              label: Text('Title'),
+            ),
+          ),
+          TextField(
+            controller: _amountController,
+            maxLength: 50,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              prefixText: '\$',
+              label: Text('Amount'),
+            ),
+          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  print(_titleController.text);
+                  print(_amountController.text);
+                },
+                child: const Text('Add'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
