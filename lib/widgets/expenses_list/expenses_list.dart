@@ -11,6 +11,7 @@ class ExpensesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: expense.length,
-        itemBuilder: (context, index) => ExpenseItem(expense: expense[index]));
+      itemBuilder: (context, index) => ExpenseItem(expense: expense[index]),
+    );
   }
 }
