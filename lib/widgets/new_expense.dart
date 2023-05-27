@@ -4,7 +4,10 @@ import 'package:udemy_lessons/models/expense.dart';
 class NewExpense extends StatefulWidget {
   const NewExpense({
     super.key,
+    required this.onExpenseAdded,
   });
+
+  final void Function(Expense expense) onExpenseAdded;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -34,7 +37,14 @@ class _NewExpenseState extends State<NewExpense> {
           ],
         ),
       );
+      return;
     }
+    widget.onExpenseAdded(Expense(
+      title: _titleController.text,
+      amount: enteredAmount,
+      purchasedDate: _selectedDate!,
+      category: _selectedCategory,
+    ));
   }
 
   void _presentDatePicker() async {
@@ -115,8 +125,6 @@ class _NewExpenseState extends State<NewExpense> {
               ElevatedButton(
                 onPressed: () {
                   _submitData();
-                  print(_titleController.text);
-                  print(_amountController.text);
                 },
                 child: const Text('Add'),
               ),
