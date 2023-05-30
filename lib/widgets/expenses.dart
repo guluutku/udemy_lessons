@@ -38,7 +38,8 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registeredExpenses.remove(expense);
     });
-    ScaffoldMessenger.of(context).clearSnackBars(); // Removes previous snackbar if a new snackbar shown
+    ScaffoldMessenger.of(context)
+        .clearSnackBars(); // Removes previous snackbar if a new snackbar shown
     // Shows snackbar
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       duration: const Duration(seconds: 5),

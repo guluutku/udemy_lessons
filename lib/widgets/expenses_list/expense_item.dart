@@ -34,8 +34,8 @@ class ExpenseItem extends StatelessWidget {
                 Text(
                   '\$${expense.amount}',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Colors.amber,
-                  ), // Override titleLarge theme only for amount text
+                        color: Colors.amber,
+                      ), // Override titleLarge theme only for amount text
                 ),
                 const Spacer(),
                 Row(
