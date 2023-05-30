@@ -20,7 +20,12 @@ class ExpenseItem extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(expense.title),
+            Text(
+              expense.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge, // Apply another theme to the card title
+            ),
             const SizedBox(
               height: 4,
             ),
@@ -39,10 +44,6 @@ class ExpenseItem extends StatelessWidget {
                 )
               ],
             ),
-            const SizedBox(
-              height: 4,
-            ),
-            Text('${expense.category}'),
           ],
         ),
       ),

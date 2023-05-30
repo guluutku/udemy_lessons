@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
         ), // Override all Elevated Button Widgets' theme
         textTheme: ThemeData().textTheme.copyWith(
               titleLarge: TextStyle(
-                color: kColorScheme.onError, // not working as we have made a color in line 31
+                color: kColorScheme.onSecondaryContainer, // not working as we have made a color in line 31
                 fontWeight: FontWeight.bold,
               ),
             ),
