@@ -34,7 +34,28 @@ class Expense {
   final DateTime purchasedDate;
   final Category category;
 
-  String get formattedDate{
+  String get formattedDate {
     return dateFormatter.format(purchasedDate);
   }
 }
+
+class ExpenseBucket {
+  ExpenseBucket({
+    required this.category,
+    required this.expenses,
+  });
+
+  final Category category;
+  final List<Expense> expenses;
+
+  double get totalExpenses {
+    double sum = 0;
+
+    for(final expense in expenses){
+      sum += expense.amount; // sum = sum + expense.amount;
+    }
+
+    return sum;
+  }
+
+} // To build a chart, Hold summed up data
