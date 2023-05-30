@@ -5,6 +5,15 @@ void main() {
   runApp(const MyApp());
 }
 
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: const Color.fromARGB(
+    255,
+    96,
+    59,
+    181,
+  ),
+); // Automatically creates color scheme based on seed color
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -14,12 +23,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData().copyWith(
         useMaterial3: true,
-        scaffoldBackgroundColor: const Color.fromARGB(
-          255,
-          220,
-          189,
-          252,
-        ),
+        // scaffoldBackgroundColor: const Color.fromARGB(255, 220, 189, 252),
+        colorScheme:
+            kColorScheme, // Can override selected parts of the theme based on color scheme
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.onPrimaryContainer,
+          foregroundColor: kColorScheme.primaryContainer,
+        ), // Set AppBar theme: colors and other UI elements
       ),
       home: const Expenses(),
     );
