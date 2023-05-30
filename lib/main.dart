@@ -6,25 +6,6 @@ void main() {
   runApp(const MyApp());
 }
 
-var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(
-    255,
-    96,
-    59,
-    181,
-  ),
-); // Automatically creates color scheme based on seed color
-
-var kDarkColorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  seedColor: const Color.fromARGB(
-    255,
-    5,
-    99,
-    125,
-  ),
-); // Color Scheme seed for Dark Mode
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

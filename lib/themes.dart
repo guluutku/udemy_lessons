@@ -50,31 +50,31 @@ ThemeData darkModeTheme() {
 
 ThemeData lightModeTheme() {
   return ThemeData().copyWith(
-        useMaterial3: true,
-        // scaffoldBackgroundColor: const Color.fromARGB(255, 220, 189, 252),
-        colorScheme:
-            kColorScheme, // Can override selected parts of the theme based on color scheme
-        appBarTheme: const AppBarTheme().copyWith(
-          backgroundColor: kColorScheme.onPrimaryContainer,
-          foregroundColor: kColorScheme.primaryContainer,
-        ), // Set AppBar theme: colors and other UI elements
-        cardTheme: const CardTheme().copyWith(
-          color: kColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 16,
+    useMaterial3: true,
+    // scaffoldBackgroundColor: const Color.fromARGB(255, 220, 189, 252),
+    colorScheme:
+        kColorScheme, // Can override selected parts of the theme based on color scheme
+    appBarTheme: const AppBarTheme().copyWith(
+      backgroundColor: kColorScheme.onPrimaryContainer,
+      foregroundColor: kColorScheme.primaryContainer,
+    ), // Set AppBar theme: colors and other UI elements
+    cardTheme: const CardTheme().copyWith(
+      color: kColorScheme.secondaryContainer,
+      margin: const EdgeInsets.symmetric(
+        vertical: 8,
+        horizontal: 16,
+      ),
+    ), // Override all Card Widgets' theme
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: kColorScheme.primaryContainer),
+    ), // Override all Elevated Button Widgets' theme
+    textTheme: ThemeData().textTheme.copyWith(
+          titleLarge: TextStyle(
+            color: kColorScheme
+                .onSecondaryContainer, // not working as we have made a color in line 31
+            fontWeight: FontWeight.bold,
           ),
-        ), // Override all Card Widgets' theme
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: kColorScheme.primaryContainer),
-        ), // Override all Elevated Button Widgets' theme
-        textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                color: kColorScheme
-                    .onSecondaryContainer, // not working as we have made a color in line 31
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-      );
+        ),
+  );
 }
