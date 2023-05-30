@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_lessons/widgets/chart/chart.dart';
 import 'package:udemy_lessons/widgets/expenses_list/expenses_list.dart';
 import 'package:udemy_lessons/models/expense.dart';
 import 'package:udemy_lessons/widgets/new_expense.dart';
@@ -80,6 +81,7 @@ class _ExpensesState extends State<Expenses> {
           ? Center(
               child: Column(
                 children: [
+                  Chart(expenses: _registeredExpenses),
                   const Text('The chart'),
                   Expanded(
                     child: ExpensesList(
