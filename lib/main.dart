@@ -30,6 +30,23 @@ class MyApp extends StatelessWidget {
           backgroundColor: kColorScheme.onPrimaryContainer,
           foregroundColor: kColorScheme.primaryContainer,
         ), // Set AppBar theme: colors and other UI elements
+        cardTheme: const CardTheme().copyWith(
+          color: kColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            vertical: 8,
+            horizontal: 16,
+          ),
+        ), // Override all Card Widgets' theme
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: kColorScheme.primaryContainer),
+        ), // Override all Elevated Button Widgets' theme
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: TextStyle(
+                color: kColorScheme.onError, // not working as we have made a color in line 31
+                fontWeight: FontWeight.bold,
+              ),
+            ),
       ),
       home: const Expenses(),
     );
