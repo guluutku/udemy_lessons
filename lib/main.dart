@@ -14,6 +14,12 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData().copyWith(
         useMaterial3: true,
+        scaffoldBackgroundColor: const Color.fromARGB(
+          255,
+          220,
+          189,
+          252,
+        ),
       ),
       home: const Expenses(),
     );
