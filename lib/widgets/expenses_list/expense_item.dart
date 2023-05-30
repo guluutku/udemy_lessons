@@ -31,7 +31,12 @@ class ExpenseItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Text('\$${expense.amount}'),
+                Text(
+                  '\$${expense.amount}',
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Colors.amber,
+                  ), // Override titleLarge theme only for amount text
+                ),
                 const Spacer(),
                 Row(
                   children: [
