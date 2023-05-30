@@ -40,10 +40,19 @@ class Expense {
 }
 
 class ExpenseBucket {
-  ExpenseBucket({
+  const ExpenseBucket({
     required this.category,
     required this.expenses,
   });
+
+  ExpenseBucket.forCategory(
+    List<Expense> allExpenses,
+    this.category,
+  ) : expenses = allExpenses
+            .where(
+              (expense) => expense.category == category,
+            )
+            .toList(); // Filter out expenses with category
 
   final Category category;
   final List<Expense> expenses;
@@ -51,11 +60,10 @@ class ExpenseBucket {
   double get totalExpenses {
     double sum = 0;
 
-    for(final expense in expenses){
+    for (final expense in expenses) {
       sum += expense.amount; // sum = sum + expense.amount;
     }
 
     return sum;
   }
-
 } // To build a chart, Hold summed up data
