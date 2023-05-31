@@ -78,24 +78,28 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: _registeredExpenses.isNotEmpty
-          ? Center(
-              child: Column(
-                children: [
-                  Chart(expenses: _registeredExpenses),
-                  const Text('The chart'),
-                  Expanded(
-                    child: ExpensesList(
-                      expense: _registeredExpenses,
-                      removeExpense: _removeExpense,
-                    ),
-                  ),
-                ],
-              ),
-            )
-          : const Center(
-              child: Text('No Expense'),
-            ),
+      body: portraitModeBody,
     );
+  }
+
+  Widget get portraitModeBody {
+    return _registeredExpenses.isNotEmpty
+        ? Center(
+            child: Column(
+              children: [
+                Chart(expenses: _registeredExpenses),
+                const Text('The chart'),
+                Expanded(
+                  child: ExpensesList(
+                    expense: _registeredExpenses,
+                    removeExpense: _removeExpense,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : const Center(
+            child: Text('No Expense'),
+          );
   }
 }
