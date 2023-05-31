@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:udemy_lessons/themes.dart';
 import 'package:udemy_lessons/widgets/expenses.dart';
 
 void main() {
-  // Locks Portrait MOde
+  // Locks Portrait Mode
   // WidgetsFlutterBinding.ensureInitialized();
   // SystemChrome.setPreferredOrientations([
   //   DeviceOrientation.portraitUp,
