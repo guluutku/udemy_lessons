@@ -68,6 +68,7 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expenses'),
@@ -78,7 +79,7 @@ class _ExpensesState extends State<Expenses> {
           ),
         ],
       ),
-      body: portraitModeBody,
+      body: width < 600 ? portraitModeBody : landScapeModeBody,
     );
   }
 
@@ -88,7 +89,26 @@ class _ExpensesState extends State<Expenses> {
             child: Column(
               children: [
                 Chart(expenses: _registeredExpenses),
-                const Text('The chart'),
+                Expanded(
+                  child: ExpensesList(
+                    expense: _registeredExpenses,
+                    removeExpense: _removeExpense,
+                  ),
+                ),
+              ],
+            ),
+          )
+        : const Center(
+            child: Text('No Expense'),
+          );
+  }
+
+  Widget get landScapeModeBody {
+    return _registeredExpenses.isNotEmpty
+        ? Center(
+            child: Row(
+              children: [
+                Expanded(child: Chart(expenses: _registeredExpenses)),
                 Expanded(
                   child: ExpensesList(
                     expense: _registeredExpenses,
