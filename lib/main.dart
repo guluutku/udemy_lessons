@@ -4,12 +4,15 @@ import 'package:udemy_lessons/themes.dart';
 import 'package:udemy_lessons/widgets/expenses.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]).then((value) {
-    runApp(const MyApp());
-  });
+  // Locks Portrait MOde
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]).then((value) {
+  //   runApp(const MyApp());
+  // });
+  //
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
