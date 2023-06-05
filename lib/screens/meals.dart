@@ -15,8 +15,14 @@ class MealsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
       itemCount: meals.length,
-      itemBuilder: (ctx, index) => Text(
-        meals[index].title,
+      itemBuilder: (ctx, index) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          meals[index].title,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        ),
       ),
     );
 
