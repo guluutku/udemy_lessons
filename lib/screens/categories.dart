@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/data/dummy_data.dart';
 import 'package:udemy_lessons/model/category.dart';
-import 'package:udemy_lessons/screens/category_grid_item.dart';
+import 'package:udemy_lessons/widgets/category_grid_item.dart';
 import 'package:udemy_lessons/screens/meals.dart';
 
 class CategoriesScreen extends StatelessWidget {
