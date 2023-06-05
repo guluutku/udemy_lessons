@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_lessons/model/meal.dart';
+import 'package:udemy_lessons/widgets/meal_item_trait.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({
@@ -9,6 +10,16 @@ class MealItem extends StatelessWidget {
   });
 
   final Meal meal;
+
+  String get complexityText { // Make only first character is upper case
+    return meal.complexity.name[0].toUpperCase() +
+        meal.complexity.name.substring(1);
+  }
+
+  String get affordabilityText { // Make only first character is upper case
+    return meal.affordability.name[0].toUpperCase() +
+        meal.affordability.name.substring(1);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +64,26 @@ class MealItem extends StatelessWidget {
                       height: 11,
                     ),
                     Row(
-                      children: [],
+                      children: [
+                        MealItemTrait(
+                          icon: Icons.schedule,
+                          label: meal.duration.toString(), // '${meal.duration}'
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        MealItemTrait(
+                          icon: Icons.work,
+                          label: complexityText,
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        MealItemTrait(
+                          icon: Icons.attach_money,
+                          label: affordabilityText,
+                        ),
+                      ],
                     ),
                   ],
                 ),
