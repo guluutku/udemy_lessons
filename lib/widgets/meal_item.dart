@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_lessons/model/meal.dart';
+import 'package:udemy_lessons/screens/meal_details.dart';
 import 'package:udemy_lessons/widgets/meal_item_trait.dart';
 
 class MealItem extends StatelessWidget {
@@ -31,7 +32,15 @@ class MealItem extends StatelessWidget {
       ),
       clipBehavior: Clip.hardEdge, // Cut the overflowed image to show shape
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => MealDetails(
+                meal: meal,
+              ),
+            ),
+          ); // Navigator.push(context, route,);;
+        },
         child: Stack(
           children: [
             FadeInImage(
