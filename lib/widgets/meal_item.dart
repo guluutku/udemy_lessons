@@ -11,12 +11,14 @@ class MealItem extends StatelessWidget {
 
   final Meal meal;
 
-  String get complexityText { // Make only first character is upper case
+  String get complexityText {
+    // Make only first character is upper case
     return meal.complexity.name[0].toUpperCase() +
         meal.complexity.name.substring(1);
   }
 
-  String get affordabilityText { // Make only first character is upper case
+  String get affordabilityText {
+    // Make only first character is upper case
     return meal.affordability.name[0].toUpperCase() +
         meal.affordability.name.substring(1);
   }
@@ -46,52 +48,74 @@ class MealItem extends StatelessWidget {
                 color: Colors.black54,
                 padding:
                     const EdgeInsets.symmetric(vertical: 6, horizontal: 44),
-                child: Column(
-                  children: [
-                    Text(
-                      meal.title,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      softWrap: true,
-                      overflow: TextOverflow.clip,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 11,
-                    ),
-                    Row(
-                      children: [
-                        MealItemTrait(
-                          icon: Icons.schedule,
-                          label: meal.duration.toString(), // '${meal.duration}'
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        MealItemTrait(
-                          icon: Icons.work,
-                          label: complexityText,
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        MealItemTrait(
-                          icon: Icons.attach_money,
-                          label: affordabilityText,
-                        ),
-                      ],
-                    ),
-                  ],
+                child: MealsExplanation(
+                  meal: meal,
+                  complexityText: complexityText,
+                  affordabilityText: affordabilityText,
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class MealsExplanation extends StatelessWidget {
+  const MealsExplanation({
+    super.key,
+    required this.meal,
+    required this.complexityText,
+    required this.affordabilityText,
+  });
+
+  final Meal meal;
+  final String complexityText;
+  final String affordabilityText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          meal.title,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+          softWrap: true,
+          overflow: TextOverflow.clip,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        const SizedBox(
+          height: 11,
+        ),
+        Row(
+          children: [
+            MealItemTrait(
+              icon: Icons.schedule,
+              label: meal.duration.toString(), // '${meal.duration}'
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            MealItemTrait(
+              icon: Icons.work,
+              label: complexityText,
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            MealItemTrait(
+              icon: Icons.attach_money,
+              label: affordabilityText,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
