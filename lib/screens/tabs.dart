@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_lessons/data/dummy_data.dart';
 import 'package:udemy_lessons/model/meal.dart';
 import 'package:udemy_lessons/screens/categories.dart';
 import 'package:udemy_lessons/screens/filter_screen.dart';
 import 'package:udemy_lessons/screens/meals.dart';
 import 'package:udemy_lessons/widgets/main_drawer.dart';
+
+const kInitialFilters = {
+  Filter.glutenFree: false,
+  Filter.lactoseFree: false,
+  Filter.vegetarian: false,
+  Filter.vegan: false,
+};
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -16,6 +24,12 @@ class _TabsScreenState extends State<TabsScreen> {
   int _pageIndex = 0;
 
   final List<Meal> _favorites = [];
+  Map<Filter, bool> _selectedFilters = {
+    Filter.glutenFree: false,
+    Filter.lactoseFree: false,
+    Filter.vegetarian: false,
+    Filter.vegan: false,
+  };
 
   void _toggleMealFavoriteStatus(Meal meal) {
     final isExisting = _favorites.contains(meal);
@@ -60,13 +74,32 @@ class _TabsScreenState extends State<TabsScreen> {
           builder: (context) => const FilterScreen(),
         ),
       );
-       print(result);
+      setState(() {
+        _selectedFilters = result ?? kInitialFilters;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final availableMeals = dummyMeals.where((meal) {
+      if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
+        return false;
+      }
+      if (_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+        return false;
+      }
+      if (_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) {
+        return false;
+      }
+      if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
+        return false;
+      }
+      return true;
+    }).toList();
+
     Widget activePage = CategoriesScreen(
+      availableMeals: availableMeals,
       onToggleFavorite: _toggleMealFavoriteStatus,
     );
     var activePageTitle = 'Categories';
