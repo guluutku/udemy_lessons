@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_lessons/screens/tabs.dart';
+import 'package:udemy_lessons/widgets/main_drawer.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -16,6 +18,14 @@ class _FilterScreenState extends State<FilterScreen> {
       appBar: AppBar(
         title: const Text('Filters'),
       ),
+      
+      drawer: MainDrawer(onSelectedScreen: ((identifier) {
+        if (identifier == 'meals') {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const TabsScreen()));
+        }
+      })),
+      
       body: Column(
         children: [
           SwitchListTile(
