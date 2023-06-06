@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+enum Filter {
+  glutenFree,
+  lactoseFree,
+  vegetarian,
+  vegan,
+}
+
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
 
@@ -27,13 +34,25 @@ class _FilterScreenState extends State<FilterScreen> {
         }
       })),
       */
-      body: Column(
-        children: [
-          glutenFilter(context),
-          lactoseFreeFilter(context),
-          vegetarianFilter(context),
-          veganFilter(context),
-        ],
+      body: WillPopScope(
+        onWillPop: () async {
+          Navigator.of(context).pop({
+            Filter.glutenFree: _glutenFreeFilterSet,
+            Filter.lactoseFree: _lactoseFreeFilterSet,
+            Filter.vegetarian: _vegetarianFilterSet,
+            Filter.vegan: _veganFilterSet,
+            
+          });
+          return false;
+        },
+        child: Column(
+          children: [
+            glutenFilter(context),
+            lactoseFreeFilter(context),
+            vegetarianFilter(context),
+            veganFilter(context),
+          ],
+        ),
       ),
     );
   }
