@@ -37,7 +37,7 @@ class _TabsScreenState extends State<TabsScreen> {
       activePageTitle = 'Favorites';
       activePage = MealsScreen(
         onToggleFavorite: _toggleMealFavoriteStatus,
-        meals: [],
+        meals: _favorites,
       );
     }
     return Scaffold(
