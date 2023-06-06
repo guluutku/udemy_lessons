@@ -4,8 +4,14 @@ import 'package:udemy_lessons/model/category.dart';
 import 'package:udemy_lessons/widgets/category_grid_item.dart';
 import 'package:udemy_lessons/screens/meals.dart';
 
+import '../model/meal.dart';
+
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({
+    super.key,
+    required this.onToggleFavorite,
+  });
+  final void Function(Meal meal) onToggleFavorite;
 
   void _selectedCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals.where((element) {
@@ -15,6 +21,7 @@ class CategoriesScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsScreen(
+          onToggleFavorite: onToggleFavorite,
           title: category.title,
           meals: filteredMeals,
         ),

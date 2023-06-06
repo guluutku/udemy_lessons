@@ -7,10 +7,12 @@ class MealsScreen extends StatelessWidget {
     super.key,
     this.title,
     required this.meals,
+    required this.onToggleFavorite,
   });
 
   final String? title;
   final List<Meal> meals;
+  final void Function(Meal meal) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,10 @@ class MealsScreen extends StatelessWidget {
       itemCount: meals.length,
       itemBuilder: (ctx, index) => Padding(
         padding: const EdgeInsets.all(8.0),
-        child: MealItem(meal: meals[index]),
+        child: MealItem(
+          meal: meals[index],
+          onToggleFavorite: onToggleFavorite,
+        ),
       ),
     );
 
