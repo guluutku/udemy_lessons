@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/model/meal.dart';
 import 'package:udemy_lessons/screens/categories.dart';
+import 'package:udemy_lessons/screens/filter_screen.dart';
 import 'package:udemy_lessons/screens/meals.dart';
 import 'package:udemy_lessons/widgets/main_drawer.dart';
 
@@ -53,6 +54,8 @@ class _TabsScreenState extends State<TabsScreen> {
 
   void _setScreen(String identifier) {
     if (identifier == 'filters') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const FilterScreen()));
     } else {
       Navigator.of(context).pop();
     }
