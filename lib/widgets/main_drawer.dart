@@ -5,36 +5,40 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var mealsTile = ListTile(
+      leading: Icon(
+        Icons.restaurant,
+        color: Theme.of(context).colorScheme.onBackground,
+        size: 26,
+      ),
+      title: Text(
+        'Meals',
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+            color: Theme.of(context).colorScheme.onBackground, fontSize: 24),
+      ),
+      onTap: () {},
+    );
+
+    var filterTile = ListTile(
+      leading: Icon(
+        Icons.settings,
+        color: Theme.of(context).colorScheme.onBackground,
+        size: 26,
+      ),
+      title: Text(
+        'Filters',
+        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+            color: Theme.of(context).colorScheme.onBackground, fontSize: 24),
+      ),
+      onTap: () {},
+    );
+
     return Drawer(
       child: Column(
         children: [
           const Header(),
-          ListTile(
-            leading: Icon(
-              Icons.restaurant,
-              color: Theme.of(context).colorScheme.onBackground,
-              size: 26,
-            ),
-            title: Text(
-              'Meals',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 24),
-            ),
-          ),
-           ListTile(
-            leading: Icon(
-              Icons.settings,
-              color: Theme.of(context).colorScheme.onBackground,
-              size: 26,
-            ),
-            title: Text(
-              'Filters',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 24),
-            ),
-          ),
+          mealsTile,
+          filterTile,
         ],
       ),
     );
