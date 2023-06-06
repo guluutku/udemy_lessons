@@ -71,7 +71,9 @@ class _TabsScreenState extends State<TabsScreen> {
     if (identifier == 'filters') {
       final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (context) => const FilterScreen(),
+          builder: (context) => FilterScreen(
+            currentFilters: _selectedFilters,
+          ),
         ),
       );
       setState(() {

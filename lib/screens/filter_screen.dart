@@ -8,7 +8,12 @@ enum Filter {
 }
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({super.key});
+  const FilterScreen({
+    super.key,
+    required this.currentFilters,
+  });
+
+  final Map<Filter, bool> currentFilters;
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
@@ -19,6 +24,15 @@ class _FilterScreenState extends State<FilterScreen> {
   var _lactoseFreeFilterSet = false;
   var _vegetarianFilterSet = false;
   var _veganFilterSet = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _glutenFreeFilterSet = widget.currentFilters[Filter.glutenFree]!;
+    _lactoseFreeFilterSet = widget.currentFilters[Filter.lactoseFree]!;
+    _vegetarianFilterSet = widget.currentFilters[Filter.vegetarian]!;
+    _veganFilterSet = widget.currentFilters[Filter.vegan]!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +55,6 @@ class _FilterScreenState extends State<FilterScreen> {
             Filter.lactoseFree: _lactoseFreeFilterSet,
             Filter.vegetarian: _vegetarianFilterSet,
             Filter.vegan: _veganFilterSet,
-            
           });
           return false;
         },
@@ -59,69 +72,69 @@ class _FilterScreenState extends State<FilterScreen> {
 
   SwitchListTile veganFilter(BuildContext context) {
     return SwitchListTile(
-          value: _veganFilterSet,
-          onChanged: (value) {
-            setState(() {
-              _veganFilterSet = value;
-            });
-          },
-          title: Text(
-            'Vegan',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-          ),
-        );
+      value: _veganFilterSet,
+      onChanged: (value) {
+        setState(() {
+          _veganFilterSet = value;
+        });
+      },
+      title: Text(
+        'Vegan',
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+      ),
+    );
   }
 
   SwitchListTile vegetarianFilter(BuildContext context) {
     return SwitchListTile(
-          value: _vegetarianFilterSet,
-          onChanged: (value) {
-            setState(() {
-              _vegetarianFilterSet = value;
-            });
-          },
-          title: Text(
-            'Vegetarian',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-          ),
-        );
+      value: _vegetarianFilterSet,
+      onChanged: (value) {
+        setState(() {
+          _vegetarianFilterSet = value;
+        });
+      },
+      title: Text(
+        'Vegetarian',
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+      ),
+    );
   }
 
   SwitchListTile lactoseFreeFilter(BuildContext context) {
     return SwitchListTile(
-          value: _lactoseFreeFilterSet,
-          onChanged: (value) {
-            setState(() {
-              _lactoseFreeFilterSet = value;
-            });
-          },
-          title: Text(
-            'Lactose Free',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-          ),
-        );
+      value: _lactoseFreeFilterSet,
+      onChanged: (value) {
+        setState(() {
+          _lactoseFreeFilterSet = value;
+        });
+      },
+      title: Text(
+        'Lactose Free',
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+      ),
+    );
   }
 
   SwitchListTile glutenFilter(BuildContext context) {
     return SwitchListTile(
-          value: _glutenFreeFilterSet,
-          onChanged: (value) {
-            setState(() {
-              _glutenFreeFilterSet = value;
-            });
-          },
-          title: Text(
-            'Gluten Free',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-          ),
-        );
+      value: _glutenFreeFilterSet,
+      onChanged: (value) {
+        setState(() {
+          _glutenFreeFilterSet = value;
+        });
+      },
+      title: Text(
+        'Gluten Free',
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+      ),
+    );
   }
 }
