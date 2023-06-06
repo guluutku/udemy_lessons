@@ -35,7 +35,7 @@ class MealItem extends StatelessWidget {
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (ctx) => MealDetails(
+              builder: (ctx) => MealDetailsScreen(
                 meal: meal,
               ),
             ),
