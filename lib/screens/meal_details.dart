@@ -19,7 +19,7 @@ class MealDetailsScreen extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              //ref.reaf(favoritesProvider);
+              ref.read(favoritesProvider.notifier).toggleFavoritesState(meal);
             },
             icon: const Icon(Icons.star),
           ),
