@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/model/meal.dart';
+import 'package:udemy_lessons/provider/favorites_provider.dart';
 import 'package:udemy_lessons/provider/meals_provider.dart';
 import 'package:udemy_lessons/screens/categories.dart';
 import 'package:udemy_lessons/screens/filter_screen.dart';
@@ -31,7 +32,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     Filter.vegetarian: false,
     Filter.vegan: false,
   };
-
+/*
   void _toggleMealFavoriteStatus(Meal meal) {
     final isExisting = _favorites.contains(meal);
     if (isExisting) {
@@ -51,7 +52,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     });
     */
   }
-
+*/
   void _showInfo(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -104,15 +105,14 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
     Widget activePage = CategoriesScreen(
       availableMeals: availableMeals,
-      onToggleFavorite: _toggleMealFavoriteStatus,
     );
     var activePageTitle = 'Categories';
 
     if (_pageIndex == 1) {
+      final favoriteMeals = ref.watch(favoritesProvider);
       activePageTitle = 'Favorites';
       activePage = MealsScreen(
-        onToggleFavorite: _toggleMealFavoriteStatus,
-        meals: _favorites,
+        meals: favoriteMeals,
       );
     }
     return Scaffold(

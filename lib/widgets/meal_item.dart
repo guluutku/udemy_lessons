@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_lessons/model/meal.dart';
 import 'package:udemy_lessons/screens/meal_details.dart';
 import 'package:udemy_lessons/widgets/meal_item_trait.dart';
 
-class MealItem extends StatelessWidget {
+class MealItem extends ConsumerWidget {
   const MealItem({
     super.key,
     required this.meal,
-    required this.onToggleFavorite,
   });
 
-  final void Function(Meal meal) onToggleFavorite;
   final Meal meal;
 
   String get complexityText {
@@ -27,7 +26,7 @@ class MealItem extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -38,7 +37,6 @@ class MealItem extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (ctx) => MealDetailsScreen(
-                onToggleFavorite: onToggleFavorite,
                 meal: meal,
               ),
             ),
