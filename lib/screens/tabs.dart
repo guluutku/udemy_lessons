@@ -25,7 +25,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _pageIndex = 0;
 
-  final List<Meal> _favorites = [];
+  // final List<Meal> _favorites = [];
   Map<Filter, bool> _selectedFilters = {
     Filter.glutenFree: false,
     Filter.lactoseFree: false,
