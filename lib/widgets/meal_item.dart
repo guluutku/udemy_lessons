@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:udemy_lessons/model/meal.dart';
 import 'package:udemy_lessons/screens/meal_details.dart';
 import 'package:udemy_lessons/widgets/meal_item_trait.dart';
 
-class MealItem extends ConsumerWidget {
+class MealItem extends StatelessWidget {
   const MealItem({
     super.key,
     required this.meal,
@@ -26,7 +25,7 @@ class MealItem extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
