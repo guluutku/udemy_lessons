@@ -37,7 +37,6 @@ class MealDetailsScreen extends ConsumerWidget {
           ),
         ],
       ),
-      // TODO: Put details from dummy data
       body: SingleChildScrollView(
         child: Column(
           children: [
