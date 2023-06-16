@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:udemy_lessons/model/meal.dart';
 import 'package:udemy_lessons/provider/favorites_provider.dart';
 import 'package:udemy_lessons/provider/meals_provider.dart';
 import 'package:udemy_lessons/screens/categories.dart';
