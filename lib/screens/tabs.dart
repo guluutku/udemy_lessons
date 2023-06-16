@@ -5,8 +5,8 @@ import 'package:udemy_lessons/screens/categories.dart';
 import 'package:udemy_lessons/screens/filter_screen.dart';
 import 'package:udemy_lessons/screens/meals.dart';
 import 'package:udemy_lessons/widgets/main_drawer.dart';
-import 'package:udemy_lessons/provider/meals_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 const kInitialFilters = {
   Filter.glutenFree: false,
   Filter.lactoseFree: false,
@@ -85,7 +85,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final availableMeals = mealsProvider.where((meal) {
+    final meals = ref.watch(mealsProvider);
+    final availableMeals = meals.where((meal) {
       if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
         return false;
       }
