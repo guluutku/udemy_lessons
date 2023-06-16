@@ -52,14 +52,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     */
   }
 */
-  void _showInfo(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
 
   void selectedPage(int index) {
     setState(() {
