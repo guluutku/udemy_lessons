@@ -2,35 +2,77 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_lessons/provider/filter_provider.dart';
 
-class FilterScreen extends ConsumerStatefulWidget {
+class FilterScreen extends ConsumerWidget {
   const FilterScreen({
     super.key,
-    required this.currentFilters,
   });
 
-  final Map<Filter, bool> currentFilters;
-
   @override
-  ConsumerState<FilterScreen> createState() => _FilterScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilter = ref.watch(filterProvider);
 
-class _FilterScreenState extends ConsumerState<FilterScreen> {
-  var _glutenFreeFilterSet = false;
-  var _lactoseFreeFilterSet = false;
-  var _vegetarianFilterSet = false;
-  var _veganFilterSet = false;
+    veganFilter() {
+      return SwitchListTile(
+        value: activeFilter[Filter.vegan]!,
+        onChanged: (value) {
+          ref.read(filterProvider.notifier).setFilter(Filter.vegan, value);
+        },
+        title: Text(
+          'Vegan',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        ),
+      );
+    }
 
-  @override
-  void initState() {
-    super.initState();
-    _glutenFreeFilterSet = widget.currentFilters[Filter.glutenFree]!;
-    _lactoseFreeFilterSet = widget.currentFilters[Filter.lactoseFree]!;
-    _vegetarianFilterSet = widget.currentFilters[Filter.vegetarian]!;
-    _veganFilterSet = widget.currentFilters[Filter.vegan]!;
-  }
+    vegetarianFilter() {
+      return SwitchListTile(
+        value: activeFilter[Filter.vegetarian]!,
+        onChanged: (value) {
+          ref.read(filterProvider.notifier).setFilter(Filter.vegetarian, value);
+        },
+        title: Text(
+          'Vegetarian',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
+    lactoseFreeFilter() {
+      return SwitchListTile(
+        value: activeFilter[Filter.lactoseFree]!,
+        onChanged: (value) {
+          ref
+              .read(filterProvider.notifier)
+              .setFilter(Filter.lactoseFree, value);
+        },
+        title: Text(
+          'Lactose Free',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        ),
+      );
+    }
+
+    glutenFilter() {
+      return SwitchListTile(
+        value: activeFilter[Filter.glutenFree]!,
+        onChanged: (value) {
+          ref.read(filterProvider.notifier).setFilter(Filter.glutenFree, value);
+        },
+        title: Text(
+          'Gluten Free',
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Filters'),
@@ -43,35 +85,22 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
         }
       })),
       */
-      body: WillPopScope(
-        onWillPop: () async {
-          Navigator.of(context).pop({
-            Filter.glutenFree: _glutenFreeFilterSet,
-            Filter.lactoseFree: _lactoseFreeFilterSet,
-            Filter.vegetarian: _vegetarianFilterSet,
-            Filter.vegan: _veganFilterSet,
-          });
-          return false;
-        },
-        child: Column(
-          children: [
-            glutenFilter(context),
-            lactoseFreeFilter(context),
-            vegetarianFilter(context),
-            veganFilter(context),
-          ],
-        ),
+      body: Column(
+        children: [
+          glutenFilter(),
+          lactoseFreeFilter(),
+          vegetarianFilter(),
+          veganFilter(),
+        ],
       ),
     );
   }
-
-  SwitchListTile veganFilter(BuildContext context) {
+/*
+  SwitchListTile veganFilter(BuildContext context, WidgetRef ref) {
     return SwitchListTile(
       value: _veganFilterSet,
       onChanged: (value) {
-        setState(() {
-          _veganFilterSet = value;
-        });
+        ref.read(filterProvider.notifier).setFilter(Filter.glutenFree, value);
       },
       title: Text(
         'Vegan',
@@ -82,14 +111,10 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
     );
   }
 
-  SwitchListTile vegetarianFilter(BuildContext context) {
+  SwitchListTile vegetarianFilter(BuildContext context, WidgetRef ref) {
     return SwitchListTile(
       value: _vegetarianFilterSet,
-      onChanged: (value) {
-        setState(() {
-          _vegetarianFilterSet = value;
-        });
-      },
+      onChanged: (value) {},
       title: Text(
         'Vegetarian',
         style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -99,14 +124,10 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
     );
   }
 
-  SwitchListTile lactoseFreeFilter(BuildContext context) {
+  SwitchListTile lactoseFreeFilter(BuildContext context, WidgetRef ref) {
     return SwitchListTile(
       value: _lactoseFreeFilterSet,
-      onChanged: (value) {
-        setState(() {
-          _lactoseFreeFilterSet = value;
-        });
-      },
+      onChanged: (value) {},
       title: Text(
         'Lactose Free',
         style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -116,14 +137,10 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
     );
   }
 
-  SwitchListTile glutenFilter(BuildContext context) {
+  SwitchListTile glutenFilter(BuildContext context, WidgetRef ref) {
     return SwitchListTile(
       value: _glutenFreeFilterSet,
-      onChanged: (value) {
-        setState(() {
-          _glutenFreeFilterSet = value;
-        });
-      },
+      onChanged: (value) {},
       title: Text(
         'Gluten Free',
         style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -131,5 +148,5 @@ class _FilterScreenState extends ConsumerState<FilterScreen> {
             ),
       ),
     );
-  }
+  }*/
 }
