@@ -44,6 +44,7 @@ class MealItem extends StatelessWidget {
         child: Stack(
           children: [
             Hero(
+              tag: meal.id,
               child: FadeInImage(
                 placeholder: MemoryImage(
                   kTransparentImage, // Imported from transparent image package
