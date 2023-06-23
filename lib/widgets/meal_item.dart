@@ -43,11 +43,13 @@ class MealItem extends StatelessWidget {
         },
         child: Stack(
           children: [
-            FadeInImage(
-              placeholder: MemoryImage(
-                kTransparentImage, // Imported from transparent image package
+            Hero(
+              child: FadeInImage(
+                placeholder: MemoryImage(
+                  kTransparentImage, // Imported from transparent image package
+                ),
+                image: NetworkImage(meal.imageUrl),
               ),
-              image: NetworkImage(meal.imageUrl),
             ),
             Positioned(
               bottom: 0, // Widget ends 0 pixels before widget ends in bottom
