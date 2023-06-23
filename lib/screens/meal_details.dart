@@ -41,14 +41,19 @@ class MealDetailsScreen extends ConsumerWidget {
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (child, animation) {
                 return RotationTransition(
-                  turns: animation,
+                  turns: Tween(
+                    // can be added <double> after Tween remove error
+                    begin: 0.5,
+                    end: 1.0,
+                  ).animate(animation), // Give more control for animation
                   child: child,
                 );
               },
               child: Icon(
                 isFavorite ? Icons.star : Icons.star_border,
                 key: ValueKey(
-                    isFavorite), // Make it so Flutter is aware of this change. AnimatedSwitcher takes key into account
+                  isFavorite,
+                ), // Make it so Flutter is aware of this change. AnimatedSwitcher takes key into account
               ),
             ),
           ),
