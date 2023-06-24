@@ -2,7 +2,7 @@ import 'package:udemy_lessons/data/categories.dart';
 import 'package:udemy_lessons/models/categories.dart';
 import 'package:udemy_lessons/models/grocery_item.dart';
 
-var groceryItems = [
+final groceryItems = [
   GroceryItem(
       id: 'a',
       name: 'Milk',
