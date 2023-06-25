@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/data/categories.dart';
-import 'package:udemy_lessons/models/categories.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
