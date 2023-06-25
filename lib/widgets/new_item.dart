@@ -18,10 +18,15 @@ class _NewItemState extends State<NewItem> {
   var _enteredItemName = '';
   var _enteredItemQuantity = 1;
   var _selectedCategory = categories[Categories.vegetables];
+  var _isSendingData = false;
 
   void saveNewItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      setState(() {
+        _isSendingData = true;
+      });
 
       final url = Uri.https(
         'udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app',
@@ -126,15 +131,23 @@ class _NewItemState extends State<NewItem> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
-          onPressed: () {
-            // Resets all inputs in the form
-            _formKey.currentState!.reset();
-          },
+          onPressed: _isSendingData
+              ? null
+              : () {
+                  // Resets all inputs in the form
+                  _formKey.currentState!.reset();
+                },
           child: const Text('Reset'),
         ),
         ElevatedButton(
-          onPressed: saveNewItem,
-          child: const Text('Save Item'),
+          onPressed: _isSendingData ? null : saveNewItem,
+          child: _isSendingData
+              ? const SizedBox(
+                  height: 16,
+                  width: 16,
+                  child: CircularProgressIndicator(),
+                )
+              : const Text('Save Item'),
         ),
       ],
     );
