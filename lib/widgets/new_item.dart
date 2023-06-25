@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/data/categories.dart';
+import 'package:udemy_lessons/models/categories.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -11,10 +12,15 @@ class NewItem extends StatefulWidget {
 class _NewItemState extends State<NewItem> {
   final _formKey = GlobalKey<FormState>();
   var _enteredItemName = '';
+  var _enteredItemQuantity = 1;
+  var _selectedCategory = categories[Categories.vegetables];
 
   void saveNewItem() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      print(_enteredItemName);
+      print(_enteredItemQuantity);
+      print(_selectedCategory);
     }
   }
 
@@ -34,9 +40,7 @@ class _NewItemState extends State<NewItem> {
         }
         return null;
       },
-      onSaved: (newValue) {
-        _enteredItemName = newValue!;
-      },
+      onSaved: (newValue) => _enteredItemName = newValue!,
     );
 
     return Scaffold(
@@ -75,7 +79,7 @@ class _NewItemState extends State<NewItem> {
         decoration: const InputDecoration(
           label: Text('Quantity'),
         ),
-        initialValue: '1',
+        initialValue: _enteredItemQuantity.toString(),
         validator: (value) {
           if (value == null ||
               value.isEmpty ||
@@ -85,6 +89,7 @@ class _NewItemState extends State<NewItem> {
           }
           return null;
         },
+        onSaved: (newValue) => _enteredItemQuantity = int.parse(newValue!),
       ),
     );
   }
@@ -111,6 +116,7 @@ class _NewItemState extends State<NewItem> {
   Expanded dropDownForm() {
     return Expanded(
       child: DropdownButtonFormField(
+        value: _selectedCategory,
         items: [
           for (final category in categories.entries)
             DropdownMenuItem(
@@ -130,7 +136,11 @@ class _NewItemState extends State<NewItem> {
               ),
             ),
         ],
-        onChanged: (value) {},
+        onChanged: (value) {
+          setState(() {
+            _selectedCategory = value;
+          });
+        },
       ),
     );
   }
