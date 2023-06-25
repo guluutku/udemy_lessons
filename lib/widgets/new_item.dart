@@ -26,7 +26,7 @@ class _NewItemState extends State<NewItem> {
         'udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app',
         'shopping-list.json',
       );
-      final response = await http.post(
+      await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
@@ -35,8 +35,7 @@ class _NewItemState extends State<NewItem> {
           'category': _selectedCategory!.name,
         }),
       );
-      print(response.body);
-      print(response.statusCode);
+      
       if(!context.mounted){
         return;
       }
