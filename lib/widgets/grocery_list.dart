@@ -37,8 +37,8 @@ class _GroceryListState extends State<GroceryList> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: _groceryItems.length,
+      body:  _groceryItems.isNotEmpty ?  ListView.builder(
+        itemCount:_groceryItems.length,
         itemBuilder: (context, index) => ListTile(
           title: Text(_groceryItems[index].name),
           leading: Container(
@@ -50,7 +50,7 @@ class _GroceryListState extends State<GroceryList> {
             _groceryItems[index].quantity.toString(),
           ),
         ),
-      ),
+      ): const Center(child: Text('No grocery added'),),
     );
   }
 }
