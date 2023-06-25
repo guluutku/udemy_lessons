@@ -72,7 +72,25 @@ class _GroceryListState extends State<GroceryList> {
   void _deleteGrocery(GroceryItem groceryItem) {
     setState(() {
       _groceryItems.remove(groceryItem);
+      _deleteFromDatabase(groceryItem);
     });
+  }
+
+  void _deleteFromDatabase(GroceryItem groceryItem) async {
+    final index = _groceryItems.indexOf(groceryItem);
+    final url = Uri.https(
+      'udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app',
+      'shopping-list/${groceryItem.id}.json',
+    );
+    final response = await http.delete(url);
+    // If user can not delete because of any of the problems
+    // Show the problem. NOT SHOWN FOR NOW
+    // Only inserts deleted item again
+    if (response.statusCode >= 400) {
+      setState(() {
+        _groceryItems.insert(index, groceryItem);
+      });
+    }
   }
 
   @override
