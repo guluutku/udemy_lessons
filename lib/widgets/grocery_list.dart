@@ -16,6 +16,7 @@ class GroceryList extends StatefulWidget {
 class _GroceryListState extends State<GroceryList> {
   final List<GroceryItem> _groceryItems = [];
   var _isLoading = true;
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -29,6 +30,11 @@ class _GroceryListState extends State<GroceryList> {
       'shopping-list.json',
     );
     final response = await http.get(url);
+    if (response.statusCode >= 400) {
+      setState(() {
+        _errorMessage = 'Failed to Load Data. Try Again..';
+      });
+    }
     final Map<String, dynamic> listData = json.decode(response.body);
     for (final data in listData.entries) {
       final category = categories.entries
@@ -71,7 +77,23 @@ class _GroceryListState extends State<GroceryList> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {}
+    // error handling
+    if (_errorMessage != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Groceries'),
+          actions: [
+            IconButton(
+              onPressed: _addItemPage,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        body: Center(
+          child: Text(_errorMessage!),
+        ),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
