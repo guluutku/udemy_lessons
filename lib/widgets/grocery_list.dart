@@ -29,32 +29,36 @@ class _GroceryListState extends State<GroceryList> {
       'udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app',
       'shopping-list.json',
     );
-    final response = await http.get(url);
-    if (response.statusCode >= 400) {
+
+    try {
+      final response = await http.get(url);
+      
+      final Map<String, dynamic> listData = json.decode(response.body);
+      for (final data in listData.entries) {
+        final category = categories.entries
+            .firstWhere(
+              (element) => element.value.name == data.value['category'],
+            )
+            .value;
+        _groceryItems.add(
+          GroceryItem(
+            id: data.key,
+            name: data.value['name'],
+            quantity: data.value['quantity'],
+            category: category,
+          ),
+        );
+      }
       setState(() {
-        _errorMessage = 'Failed to Load Data. Try Again..';
+        _groceryItems;
+        _isLoading = false;
       });
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+      return;
     }
-    final Map<String, dynamic> listData = json.decode(response.body);
-    for (final data in listData.entries) {
-      final category = categories.entries
-          .firstWhere(
-            (element) => element.value.name == data.value['category'],
-          )
-          .value;
-      _groceryItems.add(
-        GroceryItem(
-          id: data.key,
-          name: data.value['name'],
-          quantity: data.value['quantity'],
-          category: category,
-        ),
-      );
-    }
-    setState(() {
-      _groceryItems;
-      _isLoading = false;
-    });
   }
 
   void _addItemPage() async {
