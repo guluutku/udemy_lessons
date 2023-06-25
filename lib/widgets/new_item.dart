@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:udemy_lessons/data/categories.dart';
 import 'package:udemy_lessons/models/categories.dart';
+import 'package:udemy_lessons/models/grocery_item.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -26,7 +27,7 @@ class _NewItemState extends State<NewItem> {
         'udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app',
         'shopping-list.json',
       );
-      await http.post(
+      final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
@@ -35,11 +36,18 @@ class _NewItemState extends State<NewItem> {
           'category': _selectedCategory!.name,
         }),
       );
-      
-      if(!context.mounted){
+      // Fetching data from here
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      if (!context.mounted) {
         return;
       }
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(GroceryItem(
+        id: responseData['name'],
+        name: _enteredItemName,
+        quantity: _enteredItemQuantity,
+        category: _selectedCategory!,
+      ));
     }
   }
 
