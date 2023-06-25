@@ -9,6 +9,15 @@ class NewItem extends StatefulWidget {
 }
 
 class _NewItemState extends State<NewItem> {
+  final _formKey = GlobalKey<FormState>();
+  var _enteredItemName = '';
+
+  void saveNewItem() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var itemNameTextFormField = TextFormField(
@@ -17,7 +26,16 @@ class _NewItemState extends State<NewItem> {
         label: Text('Item Name'),
       ),
       validator: (value) {
-        return 'Validtion';
+        if (value == null ||
+            value.isEmpty ||
+            value.trim().length <= 1 ||
+            value.trim().length >= 50) {
+          return 'Characters must be between 1 and 50';
+        }
+        return null;
+      },
+      onSaved: (newValue) {
+        _enteredItemName = newValue!;
       },
     );
 
@@ -28,6 +46,7 @@ class _NewItemState extends State<NewItem> {
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               itemNameTextFormField,
@@ -52,10 +71,20 @@ class _NewItemState extends State<NewItem> {
   Expanded itemQuantityTextFormField() {
     return Expanded(
       child: TextFormField(
+        keyboardType: TextInputType.number,
         decoration: const InputDecoration(
           label: Text('Quantity'),
         ),
         initialValue: '1',
+        validator: (value) {
+          if (value == null ||
+              value.isEmpty ||
+              int.tryParse(value) == null ||
+              int.tryParse(value)! <= 0) {
+            return 'Must be Valid Positive Number';
+          }
+          return null;
+        },
       ),
     );
   }
@@ -65,12 +94,15 @@ class _NewItemState extends State<NewItem> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            // Resets all inputs in the form
+            _formKey.currentState!.reset();
+          },
           child: const Text('Reset'),
         ),
         ElevatedButton(
-          onPressed: () {},
-          child: Text('Elevated'),
+          onPressed: saveNewItem,
+          child: const Text('Save Item'),
         ),
       ],
     );
