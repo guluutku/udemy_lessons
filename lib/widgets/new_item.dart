@@ -12,6 +12,16 @@ class NewItem extends StatefulWidget {
 class _NewItemState extends State<NewItem> {
   @override
   Widget build(BuildContext context) {
+    var itemNameTextFormField = TextFormField(
+      maxLength: 50,
+      decoration: const InputDecoration(
+        label: Text('Item Name'),
+      ),
+      validator: (value) {
+        return 'Validtion';
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Item'),
@@ -21,34 +31,18 @@ class _NewItemState extends State<NewItem> {
         child: Form(
           child: Column(
             children: [
-              TextFormField(
-                maxLength: 50,
-                decoration: const InputDecoration(
-                  label: Text('Item Name'),
-                ),
-                validator: (value) {
-                  return 'Validtion';
-                },
-              ),
+              itemNameTextFormField,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        label: Text('Quantity'),
-                      ),
-                      initialValue: '1',
-                    ),
-                  ),
+                  itemQuantityTextFormField(),
                   const SizedBox(
                     width: 5,
                   ),
-                  Expanded(
-                    child: dropDownForm(),
-                  ),
+                  dropDownForm(),
                 ],
-              )
+              ),
+              buttons(),
             ],
           ),
         ),
@@ -56,28 +50,57 @@ class _NewItemState extends State<NewItem> {
     );
   }
 
-  DropdownButtonFormField<Category> dropDownForm() {
-    return DropdownButtonFormField(
-      items: [
-        for (final category in categories.entries)
-          DropdownMenuItem(
-            value: category.value,
-            child: Row(
-              children: [
-                Container(
-                  width: 6,
-                  height: 6,
-                  color: category.value.color,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(category.value.name),
-              ],
-            ),
-          ),
+  Expanded itemQuantityTextFormField() {
+    return Expanded(
+      child: TextFormField(
+        decoration: const InputDecoration(
+          label: Text('Quantity'),
+        ),
+        initialValue: '1',
+      ),
+    );
+  }
+
+  Row buttons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        TextButton(
+          onPressed: () {},
+          child: const Text('Reset'),
+        ),
+        ElevatedButton(
+          onPressed: () {},
+          child: Text('Elevated'),
+        ),
       ],
-      onChanged: (value) {},
+    );
+  }
+
+  Expanded dropDownForm() {
+    return Expanded(
+      child: DropdownButtonFormField(
+        items: [
+          for (final category in categories.entries)
+            DropdownMenuItem(
+              value: category.value,
+              child: Row(
+                children: [
+                  Container(
+                    width: 6,
+                    height: 6,
+                    color: category.value.color,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(category.value.name),
+                ],
+              ),
+            ),
+        ],
+        onChanged: (value) {},
+      ),
     );
   }
 }
