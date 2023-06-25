@@ -15,50 +15,45 @@ class GroceryList extends StatefulWidget {
 
 class _GroceryListState extends State<GroceryList> {
   final List<GroceryItem> _groceryItems = [];
-  var _isLoading = true;
-  String? _errorMessage;
+  late Future<List<GroceryItem>> _fetchedData;
 
   @override
   void initState() {
     super.initState();
-    _fetchData();
+    _fetchedData = _fetchData();
   }
 
-  void _fetchData() async {
+  Future<List<GroceryItem>> _fetchData() async {
     final url = Uri.https(
       'udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app',
       'shopping-list.json',
     );
 
-    try {
-      final response = await http.get(url);
-      
-      final Map<String, dynamic> listData = json.decode(response.body);
-      for (final data in listData.entries) {
-        final category = categories.entries
-            .firstWhere(
-              (element) => element.value.name == data.value['category'],
-            )
-            .value;
-        _groceryItems.add(
-          GroceryItem(
-            id: data.key,
-            name: data.value['name'],
-            quantity: data.value['quantity'],
-            category: category,
-          ),
-        );
-      }
-      setState(() {
-        _groceryItems;
-        _isLoading = false;
-      });
-    } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
-      return;
+    final response = await http.get(url);
+    if (response.statusCode >= 400) {
+      throw Exception('Have problem with back end');
     }
+    if (response.body == 'null') {
+      return [];
+    }
+
+    final Map<String, dynamic> listData = json.decode(response.body);
+    for (final data in listData.entries) {
+      final category = categories.entries
+          .firstWhere(
+            (element) => element.value.name == data.value['category'],
+          )
+          .value;
+      _groceryItems.add(
+        GroceryItem(
+          id: data.key,
+          name: data.value['name'],
+          quantity: data.value['quantity'],
+          category: category,
+        ),
+      );
+    }
+    return _groceryItems;
   }
 
   void _addItemPage() async {
@@ -89,7 +84,7 @@ class _GroceryListState extends State<GroceryList> {
     final response = await http.delete(url);
     // If user can not delete because of any of the problems
     // Show the problem. NOT SHOWN FOR NOW
-    // Only inserts deleted item again
+    // If there is any problem with deletion ,only inserts deleted item again
     if (response.statusCode >= 400) {
       setState(() {
         _groceryItems.insert(index, groceryItem);
@@ -99,24 +94,6 @@ class _GroceryListState extends State<GroceryList> {
 
   @override
   Widget build(BuildContext context) {
-    // error handling
-    if (_errorMessage != null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Groceries'),
-          actions: [
-            IconButton(
-              onPressed: _addItemPage,
-              icon: const Icon(Icons.add),
-            ),
-          ],
-        ),
-        body: Center(
-          child: Text(_errorMessage!),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Groceries'),
@@ -127,15 +104,30 @@ class _GroceryListState extends State<GroceryList> {
           ),
         ],
       ),
-      body: _isLoading
-          ? const Center(
+      //
+      body: FutureBuilder(
+        future: _fetchedData,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
               child: CircularProgressIndicator(),
-            )
-          : _groceryItems.isNotEmpty
-              ? _groceryListWidget()
-              : const Center(
-                  child: Text('No grocery added'),
-                ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+              ),
+            );
+          }
+          if (snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text('No grocery added'),
+            );
+          }
+          return _groceryListWidget();
+        },
+      ),
     );
   }
 
