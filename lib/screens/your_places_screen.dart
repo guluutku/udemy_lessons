@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_lessons/screens/add_new_place_screen.dart';
+import 'package:udemy_lessons/widgets/places_list.dart';
 
 class YourPlacesScreen extends ConsumerWidget {
   const YourPlacesScreen({super.key});
@@ -28,16 +29,7 @@ class YourPlacesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            Text(
-              'No places added yet',
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-      ),
+      body: const PlacesList(favoritePlaces: [],),
     );
   }
 }
