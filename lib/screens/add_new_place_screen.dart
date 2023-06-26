@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-class AddNewPlaceScreen extends StatelessWidget {
+class AddNewPlaceScreen extends StatefulWidget {
   const AddNewPlaceScreen({super.key});
+
+  @override
+  State<AddNewPlaceScreen> createState() => _AddNewPlaceScreenState();
+}
+
+class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
+  final _titleEditorController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleEditorController;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +29,10 @@ class AddNewPlaceScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TextFormField(
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                ),
+                controller: _titleEditorController,
                 decoration: const InputDecoration(
                   label: Text('Title'),
                 ),
