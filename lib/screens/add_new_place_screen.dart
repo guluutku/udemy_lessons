@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:udemy_lessons/provider/favorite_places_provider.dart';
 
-class AddNewPlaceScreen extends StatefulWidget {
+class AddNewPlaceScreen extends ConsumerStatefulWidget {
   const AddNewPlaceScreen({super.key});
 
   @override
-  State<AddNewPlaceScreen> createState() => _AddNewPlaceScreenState();
+  ConsumerState<AddNewPlaceScreen> createState() => _AddNewPlaceScreenState();
 }
 
-class _AddNewPlaceScreenState extends State<AddNewPlaceScreen> {
+class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
   final _titleEditorController = TextEditingController();
+
+  void _addNewFavoritePlace() {
+    final inputText = _titleEditorController.text;
+    if (inputText.isEmpty) {
+      return;
+    }
+    ref.read(favoritesProvider.notifier).addFavoritePlaces(inputText);
+    Navigator.of(context).pop();
+  }
 
   @override
   void dispose() {

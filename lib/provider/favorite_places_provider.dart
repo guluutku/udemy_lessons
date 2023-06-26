@@ -3,8 +3,9 @@ import 'package:udemy_lessons/models/favorite_place.dart';
 
 class FavoritePlacesNotifier extends StateNotifier<List<FavoritePlace>> {
   FavoritePlacesNotifier() : super([]);
-  void addFavoritePlaces(FavoritePlace favoritePlace){
-    state = state.where((fP) => fP.title != favoritePlace.title).toList();
+  void addFavoritePlaces(String title){
+    final newFavoritePlace = FavoritePlace(title: title);
+    state = [...state, newFavoritePlace];
   }
 }
 
