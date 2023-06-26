@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CameraInputWidget extends StatefulWidget {
   const CameraInputWidget({super.key});
@@ -8,7 +11,22 @@ class CameraInputWidget extends StatefulWidget {
 }
 
 class _CameraInputWidgetState extends State<CameraInputWidget> {
-  void _openCamera() {}
+  File? _takenImage;
+
+  void _openCamera() async {
+    final imagePicker = ImagePicker();
+    final takenImage = await imagePicker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 600,
+    );
+    if (takenImage == null) {
+      return;
+    }
+    setState(() {
+      _takenImage = File(takenImage.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,11 +40,16 @@ class _CameraInputWidgetState extends State<CameraInputWidget> {
       width: double.infinity,
       alignment: Alignment.center,
       // Image preview or button
-      child: TextButton.icon(
-        onPressed: () {},
-        icon: const Icon(Icons.camera),
-        label: const Text('Take Picture'),
-      ),
+      child: _takenImage == null
+          ? TextButton.icon(
+              onPressed: _openCamera,
+              icon: const Icon(Icons.camera),
+              label: const Text('Take Picture'),
+            )
+          : Image.file(
+              _takenImage!,
+              fit: BoxFit.cover,
+            ),
     );
   }
 }
