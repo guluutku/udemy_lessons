@@ -1,10 +1,10 @@
 # udemy_lessons
 
-A new Flutter project.
+Learning Use of Native Device Features 
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a Udemy Lesson Project for learning using native device features(Camera, microphone, etc...).
 
 A few resources to get you started if this is your first Flutter project:
 
