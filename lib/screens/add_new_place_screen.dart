@@ -52,7 +52,7 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
                 height: 10,
               ),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: _addNewFavoritePlace,
                 icon: const Icon(Icons.add),
                 label: const Text('Add Place'),
               ),
