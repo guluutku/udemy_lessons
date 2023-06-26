@@ -46,10 +46,13 @@ class _CameraInputWidgetState extends State<CameraInputWidget> {
               icon: const Icon(Icons.camera),
               label: const Text('Take Picture'),
             )
-          : Image.file(
-              _takenImage!,
-              fit: BoxFit.cover,
-            ),
+          : GestureDetector(
+            onTap: _openCamera,
+            child: Image.file(
+                _takenImage!,
+                fit: BoxFit.cover,
+              ),
+          ),
     );
   }
 }
