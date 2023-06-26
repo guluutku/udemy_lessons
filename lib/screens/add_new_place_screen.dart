@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_lessons/provider/favorite_places_provider.dart';
+import 'package:udemy_lessons/widgets/camera_input.dart';
 
 class AddNewPlaceScreen extends ConsumerStatefulWidget {
   const AddNewPlaceScreen({super.key});
@@ -39,15 +40,12 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextFormField(
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-                controller: _titleEditorController,
-                decoration: const InputDecoration(
-                  label: Text('Title'),
-                ),
+              titleTextFormField(context),
+              const SizedBox(
+                height: 15,
               ),
+              // Image Input widget
+              const CameraInputWidget(),
               const SizedBox(
                 height: 10,
               ),
@@ -61,5 +59,17 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
         ),
       ),
     );
+  }
+
+  TextFormField titleTextFormField(BuildContext context) {
+    return TextFormField(
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+              controller: _titleEditorController,
+              decoration: const InputDecoration(
+                label: Text('Title'),
+              ),
+            );
   }
 }

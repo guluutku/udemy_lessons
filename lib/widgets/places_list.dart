@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:udemy_lessons/models/favorite_place.dart';
 import 'package:udemy_lessons/screens/place_details_screen.dart';
 
-class PlacesList extends StatelessWidget {
-  const PlacesList({
+class PlacesListWidget extends StatelessWidget {
+  const PlacesListWidget({
     super.key,
     required this.favoritePlaces,
   });

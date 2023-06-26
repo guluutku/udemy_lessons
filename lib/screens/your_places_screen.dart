@@ -32,7 +32,7 @@ class YourPlacesScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: PlacesList(
+      body: PlacesListWidget(
         favoritePlaces: favoritePlaces,
       ),
     );
