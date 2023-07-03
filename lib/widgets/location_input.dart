@@ -10,6 +10,43 @@ class LocationInputWidget extends StatefulWidget {
 class _LocationInputWidgetState extends State<LocationInputWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [
+        Container(
+          alignment: Alignment.center,
+          height: 160,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            ),
+          ),
+          child: Text(
+            'No location chosen',
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Theme.of(context).colorScheme.onBackground),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.location_on),
+              label: const Text('Get current location'),
+            ),
+            TextButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.map),
+              label: const Text('Select on map'),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
