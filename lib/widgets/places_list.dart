@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/models/favorite_place.dart';
 import 'package:udemy_lessons/screens/place_details_screen.dart';
@@ -29,7 +27,7 @@ class PlacesListWidget extends StatelessWidget {
             itemCount: favoritePlaces.length,
             itemBuilder: (BuildContext context, int index) => ListTile(
               leading: CircleAvatar(
-                radius: 26,
+                radius: 20,
                 backgroundImage: FileImage(favoritePlaces[index].image),
               ),
               onTap: () {
