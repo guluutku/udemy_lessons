@@ -12,17 +12,19 @@ class FavoritePlaceDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(favoritePlace.title),
-        ),
-        body: Center(
-          child: Text(
-            'No places added',
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: Theme.of(context).colorScheme.onBackground),
+      appBar: AppBar(
+        title: Text(favoritePlace.title),
+      ),
+      body: Stack(
+        children: [
+          Image.file(
+            favoritePlace.image,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
-        ));
+        ],
+      ),
+    );
   }
 }
