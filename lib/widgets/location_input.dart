@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 
 class LocationInputWidget extends StatefulWidget {
   const LocationInputWidget({super.key});
@@ -8,6 +9,44 @@ class LocationInputWidget extends StatefulWidget {
 }
 
 class _LocationInputWidgetState extends State<LocationInputWidget> {
+  LocationData? locationData;
+  bool isGettingLocation = false;
+
+  void _getCurrentLocation() async {
+    Location location = Location();
+
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    setState(() {
+      isGettingLocation = true;
+    });
+
+    locationData = await location.getLocation();
+
+    setState(() {
+      isGettingLocation = false;
+    });
+
+    print('Location:  ${locationData!.latitude} , ${locationData!.longitude}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,20 +61,20 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
               color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
             ),
           ),
-          child: Text(
-            'No location chosen',
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: Theme.of(context).colorScheme.onBackground),
-          ),
+          child: isGettingLocation
+              ? const CircularProgressIndicator()
+              : Text(
+                  'No location chosen',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton.icon(
-              onPressed: () {},
+              onPressed: _getCurrentLocation,
               icon: const Icon(Icons.location_on),
               label: const Text('Get current location'),
             ),
