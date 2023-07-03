@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:udemy_lessons/provider/favorite_places_provider.dart';
@@ -12,13 +14,17 @@ class AddNewPlaceScreen extends ConsumerStatefulWidget {
 
 class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
   final _titleEditorController = TextEditingController();
+  File? _selectedImage;
 
   void _addNewFavoritePlace() {
     final inputText = _titleEditorController.text;
     if (inputText.isEmpty) {
       return;
     }
-    ref.read(favoritesProvider.notifier).addFavoritePlaces(inputText);
+    ref.read(favoritesProvider.notifier).addFavoritePlaces(
+          inputText,
+          _selectedImage!,
+        );
     Navigator.of(context).pop();
   }
 
@@ -45,7 +51,11 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
                 height: 15,
               ),
               // Image Input widget
-              const CameraInputWidget(),
+              CameraInputWidget(
+                onPickedImage: (image) {
+                  _selectedImage = image;
+                },
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -63,13 +73,13 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
 
   TextFormField titleTextFormField(BuildContext context) {
     return TextFormField(
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-              controller: _titleEditorController,
-              decoration: const InputDecoration(
-                label: Text('Title'),
-              ),
-            );
+      style: TextStyle(
+        color: Theme.of(context).colorScheme.onBackground,
+      ),
+      controller: _titleEditorController,
+      decoration: const InputDecoration(
+        label: Text('Title'),
+      ),
+    );
   }
 }

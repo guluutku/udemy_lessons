@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CameraInputWidget extends StatefulWidget {
-  const CameraInputWidget({super.key});
+  const CameraInputWidget({
+    required this.onPickedImage,
+    super.key,
+  });
+
+  final void Function(File image) onPickedImage;
 
   @override
   State<CameraInputWidget> createState() => _CameraInputWidgetState();
@@ -19,13 +24,17 @@ class _CameraInputWidgetState extends State<CameraInputWidget> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+
     if (takenImage == null) {
       return;
     }
+
     setState(() {
       _takenImage = File(takenImage.path);
     });
-  }
+
+    widget.onPickedImage(_takenImage!);
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +56,12 @@ class _CameraInputWidgetState extends State<CameraInputWidget> {
               label: const Text('Take Picture'),
             )
           : GestureDetector(
-            onTap: _openCamera,
-            child: Image.file(
+              onTap: _openCamera,
+              child: Image.file(
                 _takenImage!,
                 fit: BoxFit.cover,
               ),
-          ),
+            ),
     );
   }
 }
