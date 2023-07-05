@@ -30,6 +30,11 @@ class PlacesListWidget extends StatelessWidget {
                 radius: 20,
                 backgroundImage: FileImage(favoritePlaces[index].image),
               ),
+              subtitle: Text(
+                '${favoritePlaces[index].locationModel.latitude}, ${favoritePlaces[index].locationModel.longitude}',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground),
+              ),
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {

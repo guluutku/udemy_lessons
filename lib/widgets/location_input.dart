@@ -80,7 +80,9 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
           child: isGettingLocation
               ? const CircularProgressIndicator()
               : Text(
-                  'No location chosen',
+                  locationData == null
+                      ? 'No location chosen'
+                      : 'Location:  ${locationData!.latitude} , ${locationData!.longitude}',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: Theme.of(context).colorScheme.onBackground),
