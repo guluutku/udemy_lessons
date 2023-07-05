@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:udemy_lessons/models/location_model.dart';
 import 'package:udemy_lessons/provider/favorite_places_provider.dart';
 import 'package:udemy_lessons/widgets/camera_input.dart';
 import 'package:udemy_lessons/widgets/location_input.dart';
@@ -16,15 +17,17 @@ class AddNewPlaceScreen extends ConsumerStatefulWidget {
 class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
   final _titleEditorController = TextEditingController();
   File? _selectedImage;
+  LocationModel? _locationModel;
 
   void _addNewFavoritePlace() {
     final inputText = _titleEditorController.text;
-    if (inputText.isEmpty) {
+    if (inputText.isEmpty || _selectedImage == null || _locationModel == null) {
       return;
     }
     ref.read(favoritesProvider.notifier).addFavoritePlaces(
           inputText,
           _selectedImage!,
+          _locationModel!,
         );
     Navigator.of(context).pop();
   }
@@ -60,7 +63,10 @@ class _AddNewPlaceScreenState extends ConsumerState<AddNewPlaceScreen> {
               const SizedBox(
                 height: 10,
               ),
-              LocationInputWidget(),
+              LocationInputWidget(
+                onSelectLocation: (locationModel) =>
+                    _locationModel = locationModel,
+              ),
               const SizedBox(
                 height: 10,
               ),

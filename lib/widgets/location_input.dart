@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
+import 'package:udemy_lessons/models/location_model.dart';
 
 class LocationInputWidget extends StatefulWidget {
-  const LocationInputWidget({super.key});
+  const LocationInputWidget({
+    super.key,
+    required this.onSelectLocation,
+  });
+  final void Function(LocationModel locationModel) onSelectLocation;
 
   @override
   State<LocationInputWidget> createState() => _LocationInputWidgetState();
@@ -11,6 +16,7 @@ class LocationInputWidget extends StatefulWidget {
 class _LocationInputWidgetState extends State<LocationInputWidget> {
   LocationData? locationData;
   bool isGettingLocation = false;
+  LocationModel? _locationModel;
 
   void _getCurrentLocation() async {
     Location location = Location();
@@ -40,9 +46,19 @@ class _LocationInputWidgetState extends State<LocationInputWidget> {
 
     locationData = await location.getLocation();
 
+    if (locationData!.latitude == null || locationData!.longitude == null) {
+      return;
+    }
+
     setState(() {
+      _locationModel = LocationModel(
+        latitude: locationData!.latitude!,
+        longitude: locationData!.longitude!,
+      );
       isGettingLocation = false;
     });
+
+    widget.onSelectLocation(_locationModel!);
 
     print('Location:  ${locationData!.latitude} , ${locationData!.longitude}');
   }
