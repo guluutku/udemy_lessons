@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "671660766414",
+    "firebase_url": "https://udemy-project-7bedb-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "udemy-project-7bedb",
+    "storage_bucket": "udemy-project-7bedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671660766414:android:629436379dea986e1a8c9f",
+        "android_client_info": {
+          "package_name": "com.example.udemy_lessons"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671660766414-2h8i5g9e91stjnseejggs9gqf373d6oi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe3OVrRDy7bFNA1nOGm11LxFlg-iQVUNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671660766414-2h8i5g9e91stjnseejggs9gqf373d6oi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "671660766414-f6nm83k762kd23si9ghpgjeimubhl3pt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.udemyLessons"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
