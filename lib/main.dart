@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:udemy_lessons/screen/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:udemy_lessons/screen/chat_screen.dart';
+import 'package:udemy_lessons/screen/splash_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -30,6 +31,9 @@ class App extends StatelessWidget {
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SplashScreen();
+          }
           if (snapshot.hasData) {
             return const ChatScreen();
           } else {
