@@ -23,26 +23,31 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
     _formKey.currentState!.save();
-    if (_haveAuth) {
-    } else {
-      try {
+
+    try {
+      if (_haveAuth) {
+        _firebaseAuth.signInWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+      } else {
         _firebaseAuth.createUserWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
-      } on FirebaseAuthException catch (error) {
-        if (error.code == 'email-already-in-use') {
-          // ......
-        }
-        ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              error.message ?? 'Authentication failed',
-            ),
-          ),
-        );
       }
+    } on FirebaseAuthException catch (error) {
+      if (error.code == 'email-already-in-use') {
+        // ......
+      }
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            error.message ?? 'Authentication failed',
+          ),
+        ),
+      );
     }
   }
 
