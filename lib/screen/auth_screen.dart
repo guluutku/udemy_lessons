@@ -17,6 +17,7 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _haveAuth = true;
+  var _isAuthenticating = false;
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -33,12 +34,23 @@ class _AuthScreenState extends State<AuthScreen> {
           .child('${userCredential.user!.uid}.jgp');
       await imageStorage.putFile(_profilePicture!);
       final imageUrl = await imageStorage.getDownloadURL();
-      print('IMAGE URL $imageUrl');
-    } catch (error) {}
+    } catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Image Upload failed: $error',
+          ),
+        ),
+      );
+    }
   }
 
   void _submitEmailPassword() async {
     try {
+      setState(() {
+        _isAuthenticating = true;
+      });
       if (_haveAuth) {
         final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
           email: _emailController.text,
@@ -52,6 +64,9 @@ class _AuthScreenState extends State<AuthScreen> {
         );
         _submitImage(userCredentials);
       }
+      setState(() {
+        _isAuthenticating = false;
+      });
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ......
@@ -64,6 +79,9 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         ),
       );
+      setState(() {
+        _isAuthenticating = false;
+      });
     }
   }
 
@@ -116,7 +134,9 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          _submitElevatedButton(context),
+                          _isAuthenticating
+                              ? const CircularProgressIndicator()
+                              : _submitElevatedButton(context),
                           _askMembershipSwitch(),
                         ],
                       ),
