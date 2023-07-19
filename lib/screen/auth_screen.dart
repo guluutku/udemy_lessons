@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:udemy_lessons/widgets/user_image_picker_widget.dart';
 
 final _firebaseAuth = FirebaseAuth.instance;
 
@@ -80,6 +81,7 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (!_haveAuth) const UserImagePickerWidget(),
                           _emailTextFormField(),
                           _passwordTextFormField(),
                           const SizedBox(
