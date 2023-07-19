@@ -33,7 +33,7 @@ class _AuthScreenState extends State<AuthScreen> {
           .child('user_images')
           .child('${userCredential.user!.uid}.jgp');
       await imageStorage.putFile(_profilePicture!);
-      final imageUrl = await imageStorage.getDownloadURL();
+      // final imageUrl = await imageStorage.getDownloadURL();
     } catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
