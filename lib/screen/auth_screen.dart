@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -32,8 +33,18 @@ class _AuthScreenState extends State<AuthScreen> {
           .ref()
           .child('user_images')
           .child('${userCredential.user!.uid}.jgp');
+
       await imageStorage.putFile(_profilePicture!);
-      // final imageUrl = await imageStorage.getDownloadURL();
+      final imageUrl = await imageStorage.getDownloadURL();
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'user_name': '',
+        'user_email': _emailController.text,
+        'user_image': imageUrl,
+      });
     } catch (error) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -48,9 +59,6 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _submitEmailPassword() async {
     try {
-      setState(() {
-        _isAuthenticating = true;
-      });
       if (_haveAuth) {
         await _firebaseAuth.signInWithEmailAndPassword(
           email: _emailController.text,
@@ -64,9 +72,6 @@ class _AuthScreenState extends State<AuthScreen> {
         );
         _submitImage(userCredentials);
       }
-      setState(() {
-        _isAuthenticating = false;
-      });
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
         // ......
@@ -79,19 +84,25 @@ class _AuthScreenState extends State<AuthScreen> {
           ),
         ),
       );
-      setState(() {
-        _isAuthenticating = false;
-      });
     }
   }
 
   void _submit() {
+    setState(() {
+      _isAuthenticating = true;
+    });
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
+      setState(() {
+        _isAuthenticating = false;
+      });
       return;
     }
     _formKey.currentState!.save();
     _submitEmailPassword();
+    setState(() {
+      _isAuthenticating = false;
+    });
   }
 
   @override
