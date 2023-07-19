@@ -52,7 +52,7 @@ class _AuthScreenState extends State<AuthScreen> {
         _isAuthenticating = true;
       });
       if (_haveAuth) {
-        final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
+        await _firebaseAuth.signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
