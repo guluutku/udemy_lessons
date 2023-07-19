@@ -17,15 +17,16 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final _formKey = GlobalKey<FormState>();
-  bool _haveAuth = true;
+  bool _haveAccount = true;
   var _isAuthenticating = false;
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _userNameController = TextEditingController();
   File? _profilePicture;
 
   void _submitImage(UserCredential userCredential) async {
-    if (!_haveAuth && _profilePicture == null) {
+    if (!_haveAccount && _profilePicture == null) {
       return;
     }
     try {
@@ -41,7 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
           .collection('users')
           .doc(userCredential.user!.uid)
           .set({
-        'user_name': '',
+        'user_name': _userNameController.text,
         'user_email': _emailController.text,
         'user_image': imageUrl,
       });
@@ -59,7 +60,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   void _submitEmailPassword() async {
     try {
-      if (_haveAuth) {
+      if (_haveAccount) {
         await _firebaseAuth.signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
@@ -134,12 +135,13 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (!_haveAuth)
+                          if (!_haveAccount)
                             UserImagePickerWidget(
                               onPickImage: (pickedImage) {
                                 _profilePicture = pickedImage;
                               },
                             ),
+                          if (!_haveAccount) _userNameTextFormField(),
                           _emailTextFormField(),
                           _passwordTextFormField(),
                           const SizedBox(
@@ -162,13 +164,32 @@ class _AuthScreenState extends State<AuthScreen> {
     );
   }
 
+  TextFormField _userNameTextFormField() {
+    return TextFormField(
+      controller: _userNameController,
+      decoration: const InputDecoration(
+        labelText: 'User Name',
+      ),
+      keyboardType: TextInputType.emailAddress,
+      autocorrect: false,
+      enableSuggestions: false,
+      textCapitalization: TextCapitalization.none,
+      validator: (value) {
+        if (value == null || value.isEmpty || value.trim().length < 4) {
+          return 'Invalid user name given';
+        }
+        return null;
+      },
+    );
+  }
+
   ElevatedButton _submitElevatedButton(BuildContext context) {
     return ElevatedButton(
       onPressed: _submit,
       style: ElevatedButton.styleFrom(
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       ),
-      child: Text(_haveAuth ? 'Sing IN' : 'Sing UP'),
+      child: Text(_haveAccount ? 'Sing IN' : 'Sing UP'),
     );
   }
 
@@ -178,10 +199,10 @@ class _AuthScreenState extends State<AuthScreen> {
       children: [
         const Text('Have a account?'),
         Switch(
-          value: _haveAuth,
+          value: _haveAccount,
           onChanged: (value) {
             setState(() {
-              _haveAuth = value;
+              _haveAccount = value;
             });
           },
         ),
