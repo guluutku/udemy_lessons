@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:udemy_lessons/widgets/user_image_picker_widget.dart';
 
@@ -17,25 +20,37 @@ class _AuthScreenState extends State<AuthScreen> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  File? _profilePicture;
 
-  void _submit() {
-    final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
+  void _submitImage(UserCredential userCredential) async {
+    if (!_haveAuth && _profilePicture == null) {
       return;
     }
-    _formKey.currentState!.save();
+    try {
+      final imageStorage = FirebaseStorage.instance
+          .ref()
+          .child('user_images')
+          .child('${userCredential.user!.uid}.jgp');
+      await imageStorage.putFile(_profilePicture!);
+      final imageUrl = await imageStorage.getDownloadURL();
+      print('IMAGE URL $imageUrl');
+    } catch (error) {}
+  }
 
+  void _submitEmailPassword() async {
     try {
       if (_haveAuth) {
-        _firebaseAuth.signInWithEmailAndPassword(
+        final userCredentials = await _firebaseAuth.signInWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
       } else {
-        _firebaseAuth.createUserWithEmailAndPassword(
+        final userCredentials =
+            await _firebaseAuth.createUserWithEmailAndPassword(
           email: _emailController.text,
           password: _passwordController.text,
         );
+        _submitImage(userCredentials);
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
@@ -50,6 +65,15 @@ class _AuthScreenState extends State<AuthScreen> {
         ),
       );
     }
+  }
+
+  void _submit() {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    _formKey.currentState!.save();
+    _submitEmailPassword();
   }
 
   @override
@@ -81,7 +105,12 @@ class _AuthScreenState extends State<AuthScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (!_haveAuth) const UserImagePickerWidget(),
+                          if (!_haveAuth)
+                            UserImagePickerWidget(
+                              onPickImage: (pickedImage) {
+                                _profilePicture = pickedImage;
+                              },
+                            ),
                           _emailTextFormField(),
                           _passwordTextFormField(),
                           const SizedBox(
