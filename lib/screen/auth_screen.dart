@@ -25,6 +25,14 @@ class _AuthScreenState extends State<AuthScreen> {
   final _userNameController = TextEditingController();
   File? _profilePicture;
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _userNameController.dispose();
+    super.dispose();
+  }
+
   void _submitImage(UserCredential userCredential) async {
     if (!_haveAccount && _profilePicture == null) {
       return;
