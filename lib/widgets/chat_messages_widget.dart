@@ -11,7 +11,7 @@ class ChatMessagesWidget extends StatelessWidget {
           .collection('chat')
           .orderBy(
             'createdAt',
-            descending: false,
+            descending: true,
           )
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -35,6 +35,13 @@ class ChatMessagesWidget extends StatelessWidget {
         final messages = snapshot.data!.docs;
 
         return ListView.builder(
+          padding: const EdgeInsets.only(
+            bottom: 40,
+            left: 13,
+            right: 13, 
+          ),
+          // instead of top to bottom, widgets placed by bottom to top
+          reverse: true,
           itemCount: messages.length,
           itemBuilder: (BuildContext context, int index) {
             return Text(
