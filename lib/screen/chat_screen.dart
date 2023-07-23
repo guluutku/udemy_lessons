@@ -15,6 +15,9 @@ class _ChatScreenState extends State<ChatScreen> {
   void pushNotification() async {
     final fcm = FirebaseMessaging.instance;
     await fcm.requestPermission();
+
+    fcm.subscribeToTopic('chat');
+
     // Use below code to get fcm token for notification
     // only works with android devices
     // final fcmToken = await fcm.getToken();
